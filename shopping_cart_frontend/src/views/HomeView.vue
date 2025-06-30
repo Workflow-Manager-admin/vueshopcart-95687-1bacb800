@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ProductList from "@/components/ProductList.vue";
 import CartSummary from "@/components/CartSummary.vue";
+import SidebarWidgets from "@/components/SidebarWidgets.vue";
 </script>
 
 <template>
@@ -10,6 +11,7 @@ import CartSummary from "@/components/CartSummary.vue";
     </section>
     <aside class="right">
       <CartSummary />
+      <SidebarWidgets />
     </aside>
   </main>
 </template>

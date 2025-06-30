@@ -1,6 +1,25 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
+import ProductModal from './ProductModal.vue'
 const cart = useCartStore()
+
+function onDragStart(e: DragEvent, productId: number) {
+  if (e.dataTransfer) {
+    e.dataTransfer.setData("productId", productId.toString())
+  }
+}
+function onDropToCart(e: DragEvent) {
+  e.preventDefault()
+  const pid = Number(e.dataTransfer?.getData('productId'))
+  const prod = cart.products.find(p => p.id === pid)
+  if (prod) {
+    cart.addToCart(prod)
+    cart.showSnackbar('Added to cart by drag & drop!', 'success')
+  }
+}
+function allowDrop(e: DragEvent) {
+  e.preventDefault()
+}
 </script>
 
 <template>
@@ -18,11 +37,16 @@ const cart = useCartStore()
     <div v-if="cart.filteredProducts.length === 0" class="empty-list-msg">
       No products match your search.
     </div>
-    <div v-else class="product-grid">
+    <div v-else class="product-grid"
+         @dragover="allowDrop"
+         @drop="onDropToCart"
+         style="min-height:32px;">
       <div
         v-for="product in cart.filteredProducts"
         :key="product.id"
         class="product-card"
+        draggable="true"
+        @dragstart="onDragStart($event, product.id)"
       >
         <img
           :src="product.image"
@@ -35,20 +59,26 @@ const cart = useCartStore()
         <h3>{{ product.name }}</h3>
         <p class="desc">{{ product.description }}</p>
         <div class="price-row">
-          <span class="price">${{ product.price.toFixed(2) }}</span>
+          <span class="price">{{ cart.formatCurrency(product.price) }}</span>
           <button class="add-btn" @click="cart.addToCart(product)">Add to Cart</button>
+          <button
+            v-if="!cart.wishlist.includes(product.id)"
+            title="Add to wishlist"
+            class="wish-btn"
+            @click="cart.addToWishlist(product.id)"
+          >♡</button>
+          <button
+            v-else
+            title="Remove from wishlist"
+            class="wish-btn"
+            @click="cart.removeFromWishlist(product.id)"
+          >💔</button>
         </div>
       </div>
     </div>
-
     <ProductModal v-if="cart.showProductModal && cart.modalProduct" />
   </section>
 </template>
-
-<script lang="ts">
-import ProductModal from './ProductModal.vue'
-export default { components: { ProductModal } }
-</script>
 
 <style scoped>
 .product-list {

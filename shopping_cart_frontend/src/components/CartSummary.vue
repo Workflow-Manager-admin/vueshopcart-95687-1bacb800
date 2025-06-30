@@ -14,6 +14,9 @@ const cart = useCartStore()
         <img :src="item.product.image" :alt="item.product.name" class="cart-thumb"/>
         <div class="cart-info">
           <div class="cart-product-name">{{ item.product.name }}</div>
+          <div v-if="item.product.stock !== undefined && item.product.stock > 0 && item.product.stock - item.quantity < 3" class="stock-alert">
+            Only {{item.product.stock - item.quantity}} left!
+          </div>
           <div class="cart-item-controls">
             <button
               class="qty-btn"
@@ -29,7 +32,7 @@ const cart = useCartStore()
           </div>
         </div>
         <div class="cart-item-end">
-          <span class="line-total">${{ (item.product.price * item.quantity).toFixed(2) }}</span>
+          <span class="line-total">{{ cart.formatCurrency(item.product.price * item.quantity) }}</span>
           <button class="remove-btn" @click="cart.removeFromCart(item.product.id)" aria-label="Remove">
             ×
           </button>
@@ -40,13 +43,15 @@ const cart = useCartStore()
       <div class="breakdown-row">
         <div>
           <div>Subtotal:</div>
+          <div v-if="cart.cartSummary.discount > 0">Discount:</div>
           <div>Tax (8.5%):</div>
           <div class="cart-total-label">Total:</div>
         </div>
         <div style="text-align:right;">
-          <div>${{ cart.cartSummary.subtotal.toFixed(2) }}</div>
-          <div>${{ cart.cartSummary.tax.toFixed(2) }}</div>
-          <div class="cart-total-amount">${{ cart.cartSummary.total.toFixed(2) }}</div>
+          <div>{{ cart.formatCurrency(cart.cartSummary.subtotal) }}</div>
+          <div v-if="cart.cartSummary.discount > 0">-{{ cart.formatCurrency(cart.cartSummary.discount) }}</div>
+          <div>{{ cart.formatCurrency(cart.cartSummary.tax) }}</div>
+          <div class="cart-total-amount">{{ cart.formatCurrency(cart.cartSummary.total) }}</div>
         </div>
       </div>
       <div class="cart-actions">
@@ -56,6 +61,11 @@ const cart = useCartStore()
           @click="cart.checkout"
           :disabled="cart.checkoutStep !== 'cart' || cart.cartItems.length === 0"
         >Checkout</button>
+        <button
+          v-if="cart.invoiceData && cart.checkoutStep === 'confirmed'"
+          style="margin-left:15px"
+          @click="cart.downloadInvoice"
+        >Download Invoice</button>
       </div>
       <div v-if="cart.checkoutStep === 'checkout'" class="checkout-msg">Processing...</div>
       <div v-if="cart.checkoutStep === 'confirmed'" class="checkout-msg confirmed">

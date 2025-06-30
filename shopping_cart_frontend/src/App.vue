@@ -5,13 +5,54 @@
       <RouterLink to="/" class="nav-link" exact-active-class="active">Home</RouterLink>
       <RouterLink to="/about" class="nav-link" exact-active-class="active">About</RouterLink>
     </nav>
+    <div class="header-widgets">
+      <select v-model="cart.currency" @change="cart.setCurrency(cart.currency)" aria-label="Currency">
+        <option v-for="c in cart.CURRENCIES" :key="c.code" :value="c.code">{{c.symbol}} - {{c.label}}</option>
+      </select>
+      <button @click="cart.toggleTheme" :aria-label="`Switch ${cart.theme==='light'?'dark':'light'} mode`">
+        <span v-if="cart.theme==='light'">🌙</span>
+        <span v-else>🌞</span>
+      </button>
+      <form class="coupon-widget" @submit.prevent="applyCouponCode">
+        <input v-model="couponInput" placeholder="Coupon code" type="text" aria-label="Coupon code"/>
+        <button type="submit">Apply</button>
+      </form>
+    </div>
   </header>
-
   <RouterView />
+  <!-- Snackbar for general info, success, error -->
+  <AppSnackbar
+    :show="cart.snackbar.show"
+    :message="cart.snackbar.msg"
+    :type="snackbarType"
+  />
+  <!-- Snackbar for undo/remove (persistent, with undo) -->
+  <AppSnackbar
+    v-if="cart.showUndoSnackbar"
+    :show="cart.showUndoSnackbar"
+    message="Item removed."
+    :undo="cart.undoRemove"
+    type="info"
+  />
 </template>
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router"
+import { ref } from "vue"
+import { useCartStore } from "@/stores/cart"
+import AppSnackbar from "@/components/AppSnackbar.vue"
+const cart = useCartStore()
+const couponInput = ref('')
+function applyCouponCode() {
+  if (couponInput.value) cart.applyCoupon(couponInput.value.trim())
+  couponInput.value = ''
+}
+import { computed } from "vue"
+// Make sure only valid type is passed!
+const snackbarType = computed(() => {
+  const t = cart.snackbar.type
+  return t === "success" || t === "error" || t === "info" ? t : "info";
+});
 </script>
 
 <style scoped>
