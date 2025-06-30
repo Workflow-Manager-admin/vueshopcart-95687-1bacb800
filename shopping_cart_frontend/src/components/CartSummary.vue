@@ -7,7 +7,7 @@ const cart = useCartStore()
   <aside class="cart-summary">
     <h2 class="section-title">Shopping Cart</h2>
     <div v-if="cart.cartItems.length === 0" class="empty-cart">
-      Your cart is empty.
+      <span>Your cart is empty.</span>
     </div>
     <ul v-else class="cart-items">
       <li v-for="item in cart.cartItems" :key="item.product.id" class="cart-item">
@@ -36,10 +36,31 @@ const cart = useCartStore()
         </div>
       </li>
     </ul>
-    <div class="cart-footer" v-if="cart.cartItems.length">
-      <span class="cart-total-label">Total:</span>
-      <span class="cart-total-amount">${{ cart.total.toFixed(2) }}</span>
-      <button class="clear-btn" @click="cart.clearCart">Clear Cart</button>
+    <div v-if="cart.cartItems.length > 0" class="cart-footer">
+      <div class="breakdown-row">
+        <div>
+          <div>Subtotal:</div>
+          <div>Tax (8.5%):</div>
+          <div class="cart-total-label">Total:</div>
+        </div>
+        <div style="text-align:right;">
+          <div>${{ cart.cartSummary.subtotal.toFixed(2) }}</div>
+          <div>${{ cart.cartSummary.tax.toFixed(2) }}</div>
+          <div class="cart-total-amount">${{ cart.cartSummary.total.toFixed(2) }}</div>
+        </div>
+      </div>
+      <div class="cart-actions">
+        <button class="clear-btn" @click="cart.clearCart">Clear Cart</button>
+        <button
+          class="checkout-btn"
+          @click="cart.checkout"
+          :disabled="cart.checkoutStep !== 'cart' || cart.cartItems.length === 0"
+        >Checkout</button>
+      </div>
+      <div v-if="cart.checkoutStep === 'checkout'" class="checkout-msg">Processing...</div>
+      <div v-if="cart.checkoutStep === 'confirmed'" class="checkout-msg confirmed">
+        {{ cart.checkoutMsg }}
+      </div>
     </div>
   </aside>
 </template>
@@ -55,6 +76,9 @@ const cart = useCartStore()
   max-width: 420px;
   margin: 0 auto;
 }
+@media (max-width: 599px) {
+  .cart-summary { padding: 1rem 0.1rem }
+}
 .section-title {
   font-size: 1.5rem;
   color: #35495e;
@@ -63,9 +87,10 @@ const cart = useCartStore()
   letter-spacing: 0.01em;
 }
 .empty-cart {
-  padding: 1.2rem 0;
+  padding: 2.1rem 0 2.4rem 0;
   color: #888;
   text-align: center;
+  font-size: 1.14rem;
 }
 .cart-items {
   list-style: none;
@@ -76,8 +101,8 @@ const cart = useCartStore()
   display: flex;
   align-items: flex-start;
   border-bottom: 1px solid #eee;
-  padding: 0.6rem 0;
-  gap: 0.5rem;
+  padding: 0.6rem 0 0.7rem 0;
+  gap: 0.55rem;
 }
 .cart-thumb {
   width: 48px;
@@ -141,14 +166,20 @@ const cart = useCartStore()
   background: #fcba03;
   color: #fff;
 }
+
 .cart-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.3em;
-  margin-top: 1.2em;
+  margin-top: 1.7em;
   border-top: 1px solid #eee;
-  padding-top: 1em;
+  padding-top: 1.2em;
+}
+.breakdown-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.2em;
+  font-size: 1.08em;
+  margin-bottom: 1em;
 }
 .cart-total-label {
   color: #35495e;
@@ -159,17 +190,46 @@ const cart = useCartStore()
   font-weight: 700;
   font-size: 1.2rem;
 }
-.clear-btn {
+.cart-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}
+
+.clear-btn, .checkout-btn {
   border: none;
   background: #35495e;
   color: #fff;
   border-radius: 6px;
-  padding: 0.3em 1em;
+  padding: 0.3em 1.18em;
   cursor: pointer;
   font-weight: 500;
-  transition: background 0.18s;
+  font-size: 1.06em;
+  margin-bottom: 0;
+  transition: background 0.17s;
 }
-.clear-btn:hover {
+.clear-btn:hover, .checkout-btn:enabled:hover {
   background: #42b983;
+}
+.checkout-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.checkout-msg {
+  margin-top: 1.5em;
+  font-size: 1.12em;
+  color: #35495e;
+  transition: color 0.16s;
+}
+.checkout-msg.confirmed {
+  color: #42b983;
+  font-weight: 700;
+}
+@media (max-width: 800px) {
+  .cart-summary {
+    min-width: 175px;
+    padding: 1.1rem 0.1rem;
+  }
 }
 </style>

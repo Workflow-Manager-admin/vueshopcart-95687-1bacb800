@@ -27,6 +27,7 @@ import CartSummary from "@/components/CartSummary.vue";
   width: 100%;
 }
 
+/* Responsive design: stack on mobile, 2-column for md+ */
 @media (min-width: 900px) {
   .main-grid {
     flex-direction: row;
@@ -40,6 +41,12 @@ import CartSummary from "@/components/CartSummary.vue";
   .right {
     flex: 2;
     min-width: 320px;
+  }
+}
+
+@media (max-width: 899px) {
+  .right {
+    margin-top: 2em;
   }
 }
 </style>

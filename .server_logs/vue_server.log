@@ -1,0 +1,75 @@
+
+> vue-kavia@0.0.0 dev
+> vite dev --port 3000 --host 0.0.0.0
+
+
+  VITE v6.1.0  ready in 527 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://172.17.0.2:3000/
+  ➜  Vue DevTools: Open http://localhost:3000/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+5:53:19 AM [vite] (client) hmr update /src/components/ProductList.vue, /src/components/CartSummary.vue
+5:53:19 AM [vite] (client) hmr update /src/components/ProductList.vue, /src/components/CartSummary.vue
+5:53:29 AM [vite] (client) hmr update /src/components/ProductList.vue, /src/components/ProductList.vue?vue&type=style&index=0&scoped=32d040e6&lang.css
+5:53:30 AM [vite] Internal server error: Failed to resolve import "./ProductModal.vue" from "src/components/ProductList.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/src/components/ProductList.vue:49:25
+  15 |  import { defineComponent as _defineComponent } from "vue";
+  16 |  import { useCartStore } from "@/stores/cart";
+  17 |  import ProductModal from "./ProductModal.vue";
+     |                            ^
+  18 |  const __default__ = { components: { ProductModal } };
+  19 |  const _sfc_main = /* @__PURE__ */ _defineComponent({
+      at TransformPluginContext._formatLog (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47802:41)
+      at TransformPluginContext.error (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47799:16)
+      at normalizeUrl (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:45942:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:46061:37
+      at async Promise.all (index 3)
+      at async TransformPluginContext.transform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:45988:7)
+      at async file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:17
+      at async EnvironmentPluginContainer.transform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47597:18)
+      at async loadAndTransform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:41305:27)
+5:53:30 AM [vite] Internal server error: Failed to resolve import "./ProductModal.vue" from "src/components/ProductList.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/src/components/ProductList.vue:49:25
+  15 |  import { defineComponent as _defineComponent } from "vue";
+  16 |  import { useCartStore } from "@/stores/cart";
+  17 |  import ProductModal from "./ProductModal.vue";
+     |                            ^
+  18 |  const __default__ = { components: { ProductModal } };
+  19 |  const _sfc_main = /* @__PURE__ */ _defineComponent({
+      at TransformPluginContext._formatLog (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47802:41)
+      at TransformPluginContext.error (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47799:16)
+      at normalizeUrl (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:45942:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:46061:37
+      at async Promise.all (index 3)
+      at async TransformPluginContext.transform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:45988:7)
+      at async file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:17
+      at async EnvironmentPluginContainer.transform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47597:18)
+      at async loadAndTransform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:41305:27)
+5:53:31 AM [vite] Internal server error: Failed to resolve import "./ProductModal.vue" from "src/components/ProductList.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/src/components/ProductList.vue:49:25
+  15 |  import { defineComponent as _defineComponent } from "vue";
+  16 |  import { useCartStore } from "@/stores/cart";
+  17 |  import ProductModal from "./ProductModal.vue";
+     |                            ^
+  18 |  const __default__ = { components: { ProductModal } };
+  19 |  const _sfc_main = /* @__PURE__ */ _defineComponent({
+      at TransformPluginContext._formatLog (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47802:41)
+      at TransformPluginContext.error (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47799:16)
+      at normalizeUrl (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:45942:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:46061:37
+      at async Promise.all (index 3)
+      at async TransformPluginContext.transform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:45988:7)
+      at async file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:17
+      at async EnvironmentPluginContainer.transform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:47597:18)
+      at async loadAndTransform (file:///home/kavia/workspace/code-generation/vueshopcart-95687-1bacb800/shopping_cart_frontend/node_modules/vite/dist/node/chunks/dep-CfG9u7Cn.js:41305:27)
+5:53:37 AM [vite] (client) hmr update /src/views/HomeView.vue
+5:53:57 AM [vite] (client) hmr update /src/components/CartSummary.vue, /src/components/CartSummary.vue?vue&type=style&index=0&scoped=df5b7e1f&lang.css
+5:54:01 AM [vite] (client) hmr update /src/views/HomeView.vue?vue&type=style&index=0&scoped=b4e148ca&lang.css
+5:54:16 AM [vite] (client) hmr update /src/components/ProductList.vue, /src/components/CartSummary.vue, /src/components/ProductModal.vue

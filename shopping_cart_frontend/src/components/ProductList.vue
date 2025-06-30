@@ -6,9 +6,32 @@ const cart = useCartStore()
 <template>
   <section class="product-list">
     <h2 class="section-title">Products</h2>
-    <div class="product-grid">
-      <div v-for="product in cart.products" :key="product.id" class="product-card">
-        <img :src="product.image" :alt="product.name" class="product-img" />
+    <div class="filter-row">
+      <input
+        type="search"
+        v-model="cart.searchQuery"
+        class="search-input"
+        placeholder="Search products..."
+        aria-label="Search products"
+      />
+    </div>
+    <div v-if="cart.filteredProducts.length === 0" class="empty-list-msg">
+      No products match your search.
+    </div>
+    <div v-else class="product-grid">
+      <div
+        v-for="product in cart.filteredProducts"
+        :key="product.id"
+        class="product-card"
+      >
+        <img
+          :src="product.image"
+          :alt="product.name"
+          class="product-img"
+          @click="cart.openProductModal(product)"
+          tabindex="0"
+          :aria-label="`Show details for ${product.name}`"
+        />
         <h3>{{ product.name }}</h3>
         <p class="desc">{{ product.description }}</p>
         <div class="price-row">
@@ -17,8 +40,15 @@ const cart = useCartStore()
         </div>
       </div>
     </div>
+
+    <ProductModal v-if="cart.showProductModal && cart.modalProduct" />
   </section>
 </template>
+
+<script lang="ts">
+import ProductModal from './ProductModal.vue'
+export default { components: { ProductModal } }
+</script>
 
 <style scoped>
 .product-list {
@@ -31,6 +61,29 @@ const cart = useCartStore()
   font-weight: 700;
   letter-spacing: 0.01em;
 }
+.filter-row {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.6em;
+}
+.search-input {
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  border-radius: 7px;
+  border: 1px solid #dedede;
+}
+.search-input:focus {
+  outline: 2px solid #42b983;
+  border-color: #42b983;
+}
+
+.empty-list-msg {
+  text-align: center;
+  color: #999;
+  margin: 2em 0 1em 0;
+  font-size: 1.15rem;
+}
+
 .product-grid {
   display: grid;
   gap: 1.2rem;
@@ -39,6 +92,11 @@ const cart = useCartStore()
 @media (min-width: 700px) {
   .product-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1100px) {
+  .product-grid {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
@@ -56,14 +114,17 @@ const cart = useCartStore()
 .product-card:hover {
   box-shadow: 0 4px 16px rgba(66,185,131,0.13);
 }
-
 .product-img {
   width: 100%;
-  max-height: 150px;
+  max-height: 160px;
   object-fit: cover;
   border-radius: 8px;
+  cursor: pointer;
+  transition: outline 0.18s;
 }
-
+.product-img:focus {
+  outline: 2px solid #fcba03;
+}
 h3 {
   color: #42b983;
   margin: 0.2em 0 0.1em 0;
